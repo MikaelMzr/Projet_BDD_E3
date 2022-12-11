@@ -1,0 +1,48 @@
+CREATE TABLE Domanialitée(
+   Domanialitée VARCHAR(50),
+   PRIMARY KEY(Domanialitée)
+);
+
+CREATE TABLE Espece(
+   Nom_scientifique_espece VARCHAR(50),
+   PRIMARY KEY(Nom_scientifique_espece)
+);
+
+CREATE TABLE Genre(
+   Nom_scientifique_genre VARCHAR(50),
+   Nom_Francais_genre VARCHAR(50),
+   PRIMARY KEY(Nom_scientifique_genre)
+);
+
+CREATE TABLE Motif_Abattage(
+   Numéro_Motif VARCHAR(50),
+   Libellé VARCHAR(1000),
+   PRIMARY KEY(Numéro_Motif)
+);
+
+CREATE TABLE Adresse(
+   Nom_Adresse VARCHAR(100),
+   Nom_Arrondissement VARCHAR(50),
+   Domanialitée VARCHAR(50) NOT NULL,
+   PRIMARY KEY(Nom_Adresse, Nom_Arrondissement),
+   FOREIGN KEY(Domanialitée) REFERENCES Domanialitée(Domanialitée)
+);
+
+CREATE TABLE Arbre(
+   ID_Arbre VARCHAR(50),
+   Date_Abattage DATE,
+   Numéro_Motif VARCHAR(50) NOT NULL,
+   Nom_scientifique_genre_aba VARCHAR(50) NOT NULL,
+   Nom_scientifique_espece_aba VARCHAR(50) NOT NULL,
+   Nom_Adresse VARCHAR(100) NOT NULL,
+   Nom_Arrondissement VARCHAR(50) NOT NULL,
+   Nom_scientifique_espece_remplace VARCHAR(50) NOT NULL,
+   Nom_scientifique_genre_remplace VARCHAR(50) NOT NULL,
+   PRIMARY KEY(ID_Arbre),
+   FOREIGN KEY(Numéro_Motif) REFERENCES Motif_Abattage(Numéro_Motif),
+   FOREIGN KEY(Nom_scientifique_genre_aba) REFERENCES Genre(Nom_scientifique_genre),
+   FOREIGN KEY(Nom_scientifique_espece_aba) REFERENCES Espece(Nom_scientifique_espece),
+   FOREIGN KEY(Nom_Adresse, Nom_Arrondissement) REFERENCES Adresse(Nom_Adresse, Nom_Arrondissement),
+   FOREIGN KEY(Nom_scientifique_espece_remplace) REFERENCES Espece(Nom_scientifique_espece),
+   FOREIGN KEY(Nom_scientifique_genre_remplace) REFERENCES Genre(Nom_scientifique_genre)
+);
